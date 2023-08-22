@@ -1,24 +1,27 @@
 <template>
   <div class="app-main">
-    <header class="app-main__header">
-      some header
-    </header>
-    <section class="app-main__content">
-      <RouterView />
-    </section>
-    <footer class="app-main__footer">
-      some footer
-    </footer>
+    <TheHeader class="app-main__header" />
+    <MainContent class="app-main__content" />
   </div>
 </template>
+
+<script lang="ts" setup>
+import TheHeader from './components/TheHeader.vue';
+import MainContent from './layouts/MainContent.vue';
+
+import { useCoreStore } from './store';
+
+const core = useCoreStore();
+
+core.initApp();
+</script>
 
 <style lang="scss" scoped>
 .app-main {
   height: 100%;
   display: flex;
   flex-direction: column;
-  &__header,
-  &__footer {
+  &__header {
     flex: 0 0 auto;
   }
   &__content {

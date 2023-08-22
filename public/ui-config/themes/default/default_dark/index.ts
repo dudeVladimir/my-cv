@@ -10,5 +10,7 @@ export default {
 		th_secondary_text: '#B0B0B0',
 		th_primary: '#F9F9F9',
 		th_error: '#FF5733',
+		
+		th_white: '#FFFFFF',
 	},
 };
