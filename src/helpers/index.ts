@@ -1,4 +1,5 @@
-import themes from '../../public/ui-config/themes';
+import themes from '@/ui-config/themes';
+import { ColorName, ThemeColors, ThemeName, ThemeObj } from '@/ui-config/types';
 
 function hexToRgb(hex: string) {
   const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
@@ -16,8 +17,9 @@ function hexToRgb(hex: string) {
     : null;
 }
 
-function setCSSVars(colors: object, node: any) {
-  for (const key in colors) {
+function setCSSVars(colors: ThemeColors, node: HTMLElement) {
+  let key: ColorName;
+  for (key in colors) {
     if (Object.prototype.hasOwnProperty.call(colors, key)) {
       if (colors[key]) {
         node.style.setProperty(`--${key}`, colors[key]);
@@ -31,23 +33,24 @@ function setCSSVars(colors: object, node: any) {
   }
 }
 
-function connectThemes(element: any, currentTheme: string | null) {
-	if (!currentTheme) {
-		console.warn('current theme is null');
-		return;
-	}
-	const theme = themes[currentTheme];
-	if (!theme || typeof theme !== 'string') {
-		console.warn(`theme isn't found`);
-		return;
-	}
-	Object.keys(theme.colors).forEach((key) => {
-		element.style.setProperty(`--${key}`, theme.colors[key]);
-	});
+function connectThemes(element: HTMLElement, currentTheme?: ThemeName) {
+  if (!currentTheme) {
+    console.warn('current theme is null');
+    return;
+  }
+
+  const theme: ThemeObj = themes[currentTheme];
+  if (!theme) {
+    console.warn('theme is not found');
+    return;
+  }
+
+  let key: ColorName;
+  for (key in theme.colors) {
+    if (Object.prototype.hasOwnProperty.call(theme.colors, key)) {
+      element.style.setProperty(`--${key}`, theme.colors[key]);
+    }
+  }
 }
 
-export {
-	connectThemes,
-	hexToRgb,
-	setCSSVars,
-};
+export { connectThemes, hexToRgb, setCSSVars };
