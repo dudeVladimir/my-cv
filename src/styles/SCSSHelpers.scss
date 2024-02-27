@@ -1,0 +1,35 @@
+@for $i from 1 to 9 {
+  $value: $i * 4;
+  .mt-#{$i} {
+    margin-top: #{$value}px;
+  }
+  .mr-#{$i} {
+    margin-right: #{$value}px;
+  }
+  .mb-#{$i} {
+    margin-bottom: #{$value}px;
+  }
+  .ml-#{$i} {
+    margin-left: #{$value}px;
+  }
+  .mx-#{$i} {
+    margin-left: #{$value}px;
+    margin-right: #{$value}px;
+  }
+  .my-#{$i} {
+    margin-top: #{$value}px;
+    margin-bottom: #{$value}px;
+  }
+  .ma-#{$i} {
+    margin-top: #{$value}px;
+    margin-right: #{$value}px;
+    margin-bottom: #{$value}px;
+    margin-left: #{$value}px;
+  }
+}
+
+@for $font-size from 8 to 65 {
+  .fs-#{$font-size} {
+    font-size: #{$font-size}px;
+  }
+}

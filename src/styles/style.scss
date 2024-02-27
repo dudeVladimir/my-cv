@@ -1,6 +1,17 @@
+@import 'fonts';
+@import 'SCSSHelpers';
 @import 'resetDefault';
 @import 'defaultColor';
 
 body {
   color: var(--th_main_text);
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.v-divider {
+  height: 1px;
+  width: 100%;
+  background: var(--th_secondary_text);
 }

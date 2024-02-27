@@ -1,6 +1,16 @@
 import themes from '@/ui-config/themes';
 import { ColorName, ThemeColors, ThemeName, ThemeObj } from '@/ui-config/types';
 
+function isObject(obj: unknown): boolean {
+  return typeof obj === 'object' && !Array.isArray(obj) && obj !== null;
+}
+
+function hasKeyInObject(object: unknown, key?: string): boolean {
+  if (!key || !isObject(object)) return false;
+
+  return Object.prototype.hasOwnProperty.call(object, key);
+}
+
 function hexToRgb(hex: string) {
   const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
   hex = hex.replace(shorthandRegex, (_, r, g, b) => {
@@ -20,7 +30,7 @@ function hexToRgb(hex: string) {
 function setCSSVars(colors: ThemeColors, node: HTMLElement) {
   let key: ColorName;
   for (key in colors) {
-    if (Object.prototype.hasOwnProperty.call(colors, key)) {
+    if (hasKeyInObject(colors, key)) {
       if (colors[key]) {
         node.style.setProperty(`--${key}`, colors[key]);
       }
@@ -47,10 +57,10 @@ function connectThemes(element: HTMLElement, currentTheme?: ThemeName) {
 
   let key: ColorName;
   for (key in theme.colors) {
-    if (Object.prototype.hasOwnProperty.call(theme.colors, key)) {
+    if (hasKeyInObject(theme.colors, key)) {
       element.style.setProperty(`--${key}`, theme.colors[key]);
     }
   }
 }
 
-export { connectThemes, hexToRgb, setCSSVars };
+export { connectThemes, hexToRgb, setCSSVars, isObject, hasKeyInObject };
