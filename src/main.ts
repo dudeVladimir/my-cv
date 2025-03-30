@@ -1,28 +1,28 @@
-import { createApp } from 'vue';
+import { initMainElements } from '@/helpers/modules';
+import { connectThemes } from '@/helpers/theme';
 import { createPinia } from 'pinia';
-import { connectThemes } from './helpers';
-import './styles/style.scss';
+import { createApp } from 'vue';
+import {
+  createRouter,
+  createWebHistory,
+  type RouteRecordRaw,
+} from 'vue-router';
 import App from './App.vue';
+import './styles/style.scss';
 import { isThemeName } from './ui-config/types';
-import { findModuleList, findUiComponents } from './modules/helpers';
-import { ConfigObject } from './modules/types';
-import { RouteRecordRaw, createRouter, createWebHistory } from 'vue-router';
 
 const app = createApp(App);
 const pinia = createPinia();
 
-const moduleList: ConfigObject[] = findModuleList();
-
-// =======================
-// Регистрация всех роутов
+console.time('loading');
+console.log('load main elements');
+const { modules, uiKit } = await initMainElements();
+console.timeEnd('loading');
 
 const routes: RouteRecordRaw[] = [];
-
-moduleList.forEach((module) => {
-  if (Array.isArray(module.routes) && module.routes.length) {
-    routes.push(...module.routes);
-  }
-});
+if (Array.isArray(modules?.routes)) {
+  routes.push(...modules.routes);
+}
 
 const router = createRouter({
   history: createWebHistory(),
@@ -31,24 +31,14 @@ const router = createRouter({
   linkExactActiveClass: 'active',
 });
 
-app.use(router);
+app.use(router).use(pinia).mount('#app');
 
-// =======================
-
-app.use(pinia);
-app.mount('#app');
-
-// =======================
-// Объявление глобальных компонентов
-
-const uiComponents = findUiComponents();
-
-uiComponents.forEach((uiElement) => {
-  const { name, component } = uiElement;
-  app.component(name, component);
-});
-
-// =======================
+if (Array.isArray(uiKit)) {
+  uiKit.forEach((uiElement) => {
+    const { name, component } = uiElement;
+    app.component(name, component);
+  });
+}
 
 // =======================
 // Подключение темы, если была выбрана другая
