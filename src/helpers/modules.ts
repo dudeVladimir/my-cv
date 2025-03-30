@@ -32,7 +32,7 @@ async function findModuleList() {
 
 async function findUiComponents() {
   const uiComponents = import.meta.glob(
-    '/src/ui-config/components/*.vue',
+    '/src/ui-config/components/*/*.vue',
   ) as ModuleComponent;
 
   if (!isObject(uiComponents)) return [];

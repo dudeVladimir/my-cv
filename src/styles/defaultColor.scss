@@ -1,12 +1,29 @@
-:root {
-  --th_main_background: #f9f9f9;
-  --th_primary_background: #ffffff;
-  --th_secondary_background: #f5f5f5;
-  --th_main_accent: #be967e;
-  --th_main_text: #0d0d0d;
-  --th_secondary_text: #777777;
-  --th_primary: #0d0d0d;
-  --th_error: #ff0000;
+$default-colors: (
+  th_main_background: #f9f9f9,
+  th_primary_background: #ffffff,
+  th_secondary_background: #f5f5f5,
+  th_main_accent: #be967e,
+  th_main_text: #0d0d0d,
+  th_secondary_text: #777777,
+  th_primary: #0d0d0d,
+  th_error: #ff0000,
 
-  --th_white: #ffffff;
+  th_white: #ffffff
+);
+
+:root {
+  @each $key, $value in $default-colors {
+    --#{$key}: #{$value};
+  }
+}
+
+@each $key, $value in $default-colors {
+  .#{$key} {
+    &--text {
+      color: var(--#{$key});
+    }
+    &--background {
+      background: var(--#{$key});
+    }
+  }
 }
