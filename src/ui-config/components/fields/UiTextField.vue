@@ -4,7 +4,7 @@
     :class="{
       'ui-text-field_focused': isFocused,
       'ui-text-field_disabled': disabled,
-      'ui-text-field_has-value': !!_value,
+      'ui-text-field_has-value': hasValue,
     }"
   >
     <div
@@ -35,7 +35,7 @@
         <div
           class="input--wrapper"
           :class="{
-            'input--wrapper_has-label': !!label
+            'input--wrapper_has-label': !!label,
           }"
         >
           <input
@@ -76,6 +76,8 @@ interface Props {
   label?: string;
   type?: InputType;
   autofocus?: boolean;
+  trimmed?: boolean;
+  required?: boolean;
 };
 interface Emits {
   (ev: 'update:modelValue', v: Value): void;
@@ -90,15 +92,28 @@ interface Slots {
 const props = withDefaults(defineProps<Props>(), {
   type: 'text',
   modelValue: null,
+  label: '',
 });
 const slots = defineSlots<Slots>();
 const emit = defineEmits<Emits>();
+
+const isNumber = computed(() => props.type === 'number');
+const hasValue = computed(() => (!isNumber.value && !!_value.value) || (isNumber.value && Number.isFinite(_value.value)));
 
 const nativeInput = ref<HTMLInputElement>();
 const id = generateUiElementId('text_field');
 const _value = computed({
   get: () => props.modelValue,
-  set: v => emit('update:modelValue', v),
+  set: v => {
+    let newValue = v;
+
+    if (isNumber.value && v !== null) {
+      const toNumberV = +v;
+      newValue = Number.isFinite(toNumberV) ? toNumberV : null;
+    }
+
+    emit('update:modelValue', newValue);
+  },
 });
 
 // region focus
@@ -109,6 +124,9 @@ function focusHandler($event: FocusEvent) {
 };
 function blurHandler($event: FocusEvent) {
   isFocused.value = false;
+  if (props.trimmed && typeof _value.value === 'string')
+    _value.value = _value.value.trim();
+
   emit('blur', $event);
 };
 function setFocus() {
@@ -125,7 +143,8 @@ function inputMainClick() {
 };
 
 onMounted(() => {
-  if (props.autofocus) setFocus();
+  if (props.autofocus)
+    setFocus();
 });
 
 defineExpose({
@@ -137,9 +156,29 @@ defineExpose({
 .ui-text-field {
   &_focused {
     .ui-text-field__main {
-      background: rgba(var(--th_main_accent_rgb), 0.075);
+      background: rgba(var(--th_main_accent_rgb), 0.05);
     }
   }
+
+  // region label
+  &_has-value,
+  &_focused {
+    .ui-text-field__main {
+      .content {
+        &-main {
+          .input {
+            &--label {
+              top: unset;
+              bottom: unset;
+              font-size: 0.85em;
+            }
+          }
+        }
+      }
+    }
+  }
+  // endregion label
+
   &__main {
     position: relative;
     display: flex;
@@ -170,8 +209,14 @@ defineExpose({
         height: 100%;
         .input {
           &--label {
+            transition: all .2s;
             position: absolute;
-            font-size: 0.85em;
+            display: flex;
+            align-items: center;
+            font-size: 1.5em;
+            top: 0;
+            bottom: 0;
+            max-width: 100%;
           }
           &--wrapper {
             height: 100%;
