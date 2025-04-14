@@ -5,93 +5,105 @@
     url('/fonts/Comfortaa-VariableFont_wght.ttf') format('truetype');
 }
 
+$font-xs-size: 12px;
+$font-s-size: 14px;
+$font-m-size: 16px;
+$font-l-size: 20px;
+$header-m-size: 24px;
+$header-l-size: 28px;
+$header-xl-size: 32px;
+
+$font-1-weight: 300;
+$font-2-weight: 400;
+$font-3-weight: 600;
+
 .text-xs-1 {
-  font-size: 12px;
-  font-weight: 300;
+  font-size: $font-xs-size;
+  font-weight: $font-1-weight;
 }
 .text-xs-2 {
-  font-size: 12px;
-  font-weight: 400;
+  font-size: $font-xs-size;
+  font-weight: $font-2-weight;
 }
 .text-xs-3 {
-  font-size: 12px;
-  font-weight: 600;
+  font-size: $font-xs-size;
+  font-weight: $font-3-weight;
 }
 
 .text-s-1 {
-  font-size: 14px;
-  font-weight: 300;
+  font-size: $font-s-size;
+  font-weight: $font-1-weight;
 }
 .text-s-2 {
-  font-size: 14px;
-  font-weight: 400;
+  font-size: $font-s-size;
+  font-weight: $font-2-weight;
 }
 .text-s-3 {
-  font-size: 14px;
-  font-weight: 600;
+  font-size: $font-s-size;
+  font-weight: $font-3-weight;
 }
 
 .text-m-1 {
-  font-size: 16px;
-  font-weight: 300;
+  font-size: $font-m-size;
+  font-weight: $font-1-weight;
 }
 .text-m-2 {
-  font-size: 16px;
-  font-weight: 400;
+  font-size: $font-m-size;
+  font-weight: $font-2-weight;
 }
 .text-m-3 {
-  font-size: 16px;
-  font-weight: 600;
+  font-size: $font-m-size;
+  font-weight: $font-3-weight;
 }
 
 .text-l-1 {
-  font-size: 20px;
-  font-weight: 300;
+  font-size: $font-l-size;
+  font-weight: $font-1-weight;
 }
 .text-l-2 {
-  font-size: 20px;
-  font-weight: 400;
+  font-size: $font-l-size;
+  font-weight: $font-2-weight;
 }
 .text-l-3 {
-  font-size: 20px;
-  font-weight: 600;
+  font-size: $font-l-size;
+  font-weight: $font-3-weight;
 }
 
 .header-m-1 {
-  font-size: 24px;
-  font-weight: 300;
+  font-size: $header-m-size;
+  font-weight: $font-1-weight;
 }
 .header-m-2 {
-  font-size: 24px;
-  font-weight: 400;
+  font-size: $header-m-size;
+  font-weight: $font-2-weight;
 }
 .header-m-3 {
-  font-size: 24px;
-  font-weight: 600;
+  font-size: $header-m-size;
+  font-weight: $font-3-weight;
 }
 
 .header-l-1 {
-  font-size: 28px;
-  font-weight: 300;
+  font-size: $header-l-size;
+  font-weight: $font-1-weight;
 }
 .header-l-2 {
-  font-size: 28px;
-  font-weight: 400;
+  font-size: $header-l-size;
+  font-weight: $font-2-weight;
 }
 .header-l-3 {
-  font-size: 28px;
-  font-weight: 600;
+  font-size: $header-l-size;
+  font-weight: $font-3-weight;
 }
 
 .header-xl-1 {
-  font-size: 32px;
-  font-weight: 300;
+  font-size: $header-xl-size;
+  font-weight: $font-1-weight;
 }
 .header-xl-2 {
-  font-size: 32px;
-  font-weight: 400;
+  font-size: $header-xl-size;
+  font-weight: $font-2-weight;
 }
 .header-xl-3 {
-  font-size: 32px;
-  font-weight: 600;
+  font-size: $header-xl-size;
+  font-weight: $font-3-weight;
 }

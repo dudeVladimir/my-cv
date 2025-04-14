@@ -1,5 +1,5 @@
 <template>
-  <div class="demo-page">
+  <div class="demo-page default-wrapper">
     <div class="demo-page__header header-xl-3">
       demo page
     </div>
@@ -30,7 +30,7 @@ const linkList = [...(routes[0].children as Array<{ name: string }>), { name: 'm
 
 <style lang="scss">
 .demo-page {
-  max-width: 900px;
+  max-width: 1200px;
   margin: 0 auto;
   &__header {
     margin: 20px auto;

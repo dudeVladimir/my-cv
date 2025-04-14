@@ -3,6 +3,13 @@
 @import 'resetDefault';
 @import 'defaultColor';
 
+$w-small-mobile: 480px;
+$w-mobile: 600px;
+$w-small-table: 768px;
+$w-table: 1024px;
+$w-laptop: 1280px;
+$w-desktop: 1440px;
+
 body {
   color: var(--th_main_text);
   font-family: 'Comfortaa', sans-serif;
@@ -10,8 +17,37 @@ body {
   font-weight: 400;
 }
 
+a {
+  &.active-link {
+    &_exact {
+      color: var(--th_secondary_text);
+      text-decoration: none;
+      cursor: default;
+    }
+  }
+
+  color: var(--th_main_text);
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--th_secondary_text);
+    text-decoration: underline;
+  }
+}
+
+button {
+  border: 1px solid var(--th_main_accent);
+  color: var(--th_main_text);
+  border-radius: 6px;
+}
+
 .v-divider {
   height: 1px;
   width: 100%;
   background: var(--th_secondary_text);
+}
+
+.default-wrapper {
+  padding: 0 16px;
 }
