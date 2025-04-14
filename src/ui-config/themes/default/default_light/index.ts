@@ -1,4 +1,4 @@
-import { ThemeObj } from '../../../types';
+import type { ThemeObj } from '../../../types';
 
 const default_light: ThemeObj = {
   name: 'default_light',

@@ -1,4 +1,4 @@
-import { ThemeObj } from '../../../types';
+import type { ThemeObj } from '../../../types';
 
 const default_dark: ThemeObj = {
   name: 'default_dark',

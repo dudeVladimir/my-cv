@@ -11,35 +11,6 @@ import App from './App.vue';
 import './styles/style.scss';
 import { isThemeName } from './ui-config/types';
 
-const app = createApp(App);
-const pinia = createPinia();
-
-console.time('loading');
-console.log('load main elements');
-const { modules, uiKit } = await initMainElements();
-console.timeEnd('loading');
-
-const routes: RouteRecordRaw[] = [];
-if (Array.isArray(modules?.routes)) {
-  routes.push(...modules.routes);
-}
-
-const router = createRouter({
-  history: createWebHistory(),
-  routes,
-  linkActiveClass: 'active',
-  linkExactActiveClass: 'active',
-});
-
-app.use(router).use(pinia).mount('#app');
-
-if (Array.isArray(uiKit)) {
-  uiKit.forEach((uiElement) => {
-    const { name, component } = uiElement;
-    app.component(name, component);
-  });
-}
-
 // =======================
 // Подключение темы, если была выбрана другая
 
@@ -49,3 +20,33 @@ if (currentTheme && isThemeName(currentTheme)) {
 }
 
 // =======================
+
+const app = createApp(App);
+const pinia = createPinia();
+
+console.time('loading');
+console.log('load main elements');
+initMainElements().then(({ modules, uiKit }) => {
+  const routes: RouteRecordRaw[] = [];
+  if (Array.isArray(modules?.routes)) {
+    routes.push(...modules.routes);
+  }
+
+  const router = createRouter({
+    history: createWebHistory(),
+    routes,
+    linkActiveClass: 'active-link',
+    linkExactActiveClass: 'active-link active-link_exact',
+  });
+
+  app.use(router).use(pinia).mount('#app');
+
+  if (Array.isArray(uiKit)) {
+    uiKit.forEach((uiElement) => {
+      const { name, component } = uiElement;
+      app.component(name, component);
+    });
+  }
+
+  console.timeEnd('loading');
+});

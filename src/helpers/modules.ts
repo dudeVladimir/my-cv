@@ -5,7 +5,7 @@ import { isObject } from '.';
 
 type Module<T> = () => Promise<{ default: T }>;
 type ModuleConfig = Record<string, Module<ConfigObject>>;
-type ModuleComponent = Record<string, Module<Component & { __file: string }>>;
+type ModuleComponent = Record<string, Module<Component & { __file?: string, __name?: string }>>;
 
 async function findModuleList() {
   const modules = import.meta.glob('/src/modules/*/config.ts') as ModuleConfig;
@@ -32,7 +32,7 @@ async function findModuleList() {
 
 async function findUiComponents() {
   const uiComponents = import.meta.glob(
-    '/src/ui-config/components/*/*.vue',
+    ['/src/ui-config/components/*/*.vue', '/src/ui-config/components/*/*/*.vue'],
   ) as ModuleComponent;
 
   if (!isObject(uiComponents)) return [];
@@ -45,10 +45,10 @@ async function findUiComponents() {
         const uiElement = await uiComponents[key]();
         if (!uiElement) throw new Error('component not found');
 
-        const filePathArr = uiElement.default.__file.split('/');
-        const fileName = filePathArr[filePathArr.length - 1];
+        const filePathArr = uiElement.default.__file?.split('/');
+        const fileName = filePathArr?.[filePathArr.length - 1] ?? uiElement.default?.__name;
 
-        const name = fileName.split('.')[0];
+        const name = fileName?.split('.')[0];
 
         uiKit.push({ name, component: uiElement.default });
       } catch (error) {

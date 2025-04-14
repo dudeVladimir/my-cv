@@ -1,4 +1,4 @@
-import { ConfigObject } from '../types';
+import type { ConfigObject } from '../types';
 import routes from './router/index';
 
 const config: ConfigObject = {
