@@ -1,7 +1,7 @@
-import { setCSSVars } from '@/helpers/theme';
+import { setCSSVars } from '_helpers/theme';
 import uiConfig from '@/ui-config';
 import { defineStore } from 'pinia';
-import { ThemeName } from '../ui-config/types/index';
+import type { ThemeName } from '../ui-config/types';
 
 type State = {
   selectedTheme: ThemeName;

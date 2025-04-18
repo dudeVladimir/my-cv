@@ -7,6 +7,7 @@
         class="radio-item"
       >
         <UiRadioItem
+          class="radio-item__component"
           :item="item"
           :item-text="itemText"
           :item-value="itemValue"
@@ -21,10 +22,10 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import UiRadioItem from './UiRadioItem.vue';
 import type { Item, ItemValueOrText, Value } from './types';
 import { findReturnValue } from './helpers';
 
+const UiRadioItem = () => './UiRadioItem.vue';
 interface Props {
   modelValue: Value;
   items: Item[];

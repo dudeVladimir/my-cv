@@ -1,5 +1,5 @@
-import { initMainElements } from '@/helpers/modules';
-import { connectThemes } from '@/helpers/theme';
+import { initMainElements } from '_helpers/modules';
+import { connectThemes } from '_helpers/theme';
 import { createPinia } from 'pinia';
 import { createApp } from 'vue';
 import {
