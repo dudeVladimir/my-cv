@@ -3,7 +3,9 @@
     <div class="main-content__body">
       <RouterView />
     </div>
-    <footer class="main-content__footer">some footer</footer>
+    <footer class="main-content__footer">
+      some footer
+    </footer>
   </div>
 </template>
 

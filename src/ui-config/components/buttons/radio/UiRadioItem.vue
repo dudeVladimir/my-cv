@@ -13,14 +13,11 @@
         @click="selectItem"
       >
         <div class="item-marker">
-          <div
-            class="item-marker__inner"
-            :class="{ 'item-marker__inner_filled': isActive }"
-          />
+          <div class="item-marker__inner" :class="{ 'item-marker__inner_filled': isActive }" />
         </div>
         <div class="item-text">
           <template v-if="slots.default">
-            <slot />
+            <slot v-bind="{ item }" />
           </template>
           <template v-else>
             {{ itemText }}
@@ -33,8 +30,8 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import type { Item, ItemValueOrText, Value } from './types';
 import { findReturnValue } from './helpers';
+import type { Item, ItemValueOrText, Value } from './types';
 
 interface Props {
   item: Item;
