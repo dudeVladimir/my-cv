@@ -15,7 +15,7 @@
 <script lang="ts" setup>
 interface Props {
   disabled?: boolean;
-  variant?: string;
+  variant?: 'default' | 'primary';
 }
 
 withDefaults(defineProps<Props>(), {
