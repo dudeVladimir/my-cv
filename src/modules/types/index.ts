@@ -4,5 +4,4 @@ export type ConfigObject = {
   name: string;
   title: string;
   routes: RouteRecordRaw[];
-  isMain?: boolean;
 };
