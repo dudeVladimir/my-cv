@@ -1,17 +1,9 @@
-import uiConfig from '@/ui-config';
-import { setCSSVars } from '_helpers/theme';
-import { defineStore } from 'pinia';
-import { ref } from 'vue';
-import type { ThemeName } from '../ui-config/types';
+import { defineStore } from "pinia";
+import { useThemesStore } from "./themes";
 
 export const useCoreStore = defineStore('_core', () => {
-  const selectedTheme = ref<ThemeName>(uiConfig.themes.default_light.name);
-
-  function changeTheme(themeName: ThemeName): void {
-    selectedTheme.value = themeName;
-    const colors = uiConfig.themes[selectedTheme.value].colors;
-    setCSSVars(colors, document.documentElement);
-  };
+  const themesStore = useThemesStore();
+  const { changeTheme } = themesStore;
 
   function initApp(): void {
     const isDarkThemePrefer = window.matchMedia(
@@ -24,9 +16,6 @@ export const useCoreStore = defineStore('_core', () => {
   };
 
   return {
-    selectedTheme,
-
-    changeTheme,
     initApp,
   }
 });

@@ -55,9 +55,10 @@
 </template>
 
 <script setup lang="ts">
-import { useCoreStore } from '@/store';
+import { useThemesStore } from '@/store/themes';
 import uiConfig from '@/ui-config';
 import { ThemeName } from '@/ui-config/types';
+import { storeToRefs } from 'pinia';
 
 const fontClasses = [
   'text-xs-1',
@@ -83,12 +84,14 @@ const fontClasses = [
   'header-xl-3',
 ];
 
-const core = useCoreStore();
+const themesStore = useThemesStore();
+const { changeTheme } = themesStore;
+const { selectedTheme } = storeToRefs(themesStore);
 
-const colors = uiConfig.themes[core.selectedTheme].colors;
+const colors = uiConfig.themes[selectedTheme.value].colors;
 
 const themeHandler = (name: ThemeName) => {
-  core.changeTheme(name);
+  changeTheme(name);
 };
 </script>
 
