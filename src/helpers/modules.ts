@@ -1,12 +1,18 @@
-import type { ConfigObject } from '@/modules/types';
+import demoConfig from '@/modules/demo-page/config';
+import { ConfigObject } from '@/modules/types';
 import type { Component } from 'vue';
 import type { RouteRecordRaw } from 'vue-router';
-import { isObject } from '.';
+import { isDev, isObject } from '.';
 
 type Module<T> = () => Promise<{ default: T }>;
 type ModuleConfig = Record<string, Module<ConfigObject>>;
 type ModuleComponent = Record<string, Module<Component & { __file?: string, __name?: string }>>;
 
+/**
+ * Finds and returns a list of module configurations defined in the application.
+ *
+ * @returns {Promise<ConfigObject[]>} A promise that resolves to an array of module configurations.
+ */
 async function findModuleList() {
   const modules = import.meta.glob('/src/modules/*/config.ts') as ModuleConfig;
 
@@ -30,6 +36,11 @@ async function findModuleList() {
   return moduleConfigLits;
 }
 
+/**
+ * Finds and returns a list of UI components defined in the application.
+ *
+ * @returns {Promise<ComponentOptions[]>} A promise that resolves to an array of UI component options.
+ */
 async function findUiComponents() {
   const uiComponents = import.meta.glob(
     ['/src/ui-config/components/*/*.vue', '/src/ui-config/components/*/*/*.vue'],
@@ -61,29 +72,43 @@ async function findUiComponents() {
   return uiKit;
 }
 
+/**
+ * Initializes the module configurations by discovering and returning all module routes.
+ * @returns {Promise<{ routes: RouteRecordRaw[] }>} A promise that resolves to an object containing the module routes.
+ */
 async function initModulesConfig() {
   const moduleList = await findModuleList();
 
-  // =======================
-  // Регистрация всех роутов
   const routes: RouteRecordRaw[] = [];
   moduleList.forEach((module) => {
+    if (demoConfig.name === module.name && !isDev)
+      return; // skip demo module in production
+
     if (!Array.isArray(module.routes)) return;
     routes.push(...module.routes);
   });
-  // =======================
 
   return {
     routes,
   };
 }
 
+
+/**
+ * Initializes the UI Kit by discovering and returning all UI components.
+ *
+ * @returns {Promise<ComponentOptions[]>} A promise that resolves to the list of found UI components.
+ */
 async function initUiKit() {
-  // Объявление глобальных компонентов
   const uiComponents = await findUiComponents();
   return uiComponents;
 }
 
+/**
+ * Initializes the main elements of the application, including module configurations and UI components.
+ *
+ * @returns {Promise<{ modules: ConfigObject | null, uiKit: ComponentOptions[] | null }>} A promise that resolves to an object containing the module configurations and UI components.
+ */
 export async function initMainElements() {
   const [modules, uiKit] = await Promise.allSettled([
     await initModulesConfig(),

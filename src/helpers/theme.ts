@@ -2,6 +2,12 @@ import themes from '@/ui-config/themes';
 import { ColorName, ThemeColors, ThemeName, ThemeObj } from '@/ui-config/types';
 import { hasKeyInObject } from '.';
 
+/**
+ * Converts a hex color string to an RGB object.
+ *
+ * @param hex - The hex color string (e.g., "#ff0000").
+ * @returns {Object|null} An object with `r`, `g`, and `b` properties, or null if the input is invalid.
+ */
 export function hexToRgb(hex: string) {
   const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
   hex = hex.replace(shorthandRegex, (_, r, g, b) => {
@@ -18,6 +24,15 @@ export function hexToRgb(hex: string) {
     : null;
 }
 
+/** * Sets CSS variables for the provided colors on the specified HTML element.
+ * @param {ThemeColors} colors - An object containing color names as keys and their hex values as values.
+ * @param {HTMLElement} node - The HTML element on which to set the CSS variables.
+ * @example
+ * setCSSVars({
+ *   primary: '#ff0000',
+ *   secondary: '#00ff00',
+ *   accent: '#0000ff'
+ */
 export function setCSSVars(colors: ThemeColors, node: HTMLElement) {
   let key: ColorName;
   for (key in colors) {
@@ -34,6 +49,11 @@ export function setCSSVars(colors: ThemeColors, node: HTMLElement) {
   }
 }
 
+/**
+ * Connects the specified HTML element to the current theme by setting CSS variables.
+ * @param {HTMLElement} element - The HTML element to connect to the theme.
+ * @param {ThemeName} [currentTheme] - The name of the current theme.
+ */
 export function connectThemes(element: HTMLElement, currentTheme?: ThemeName) {
   if (!currentTheme) {
     console.warn('current theme is null');

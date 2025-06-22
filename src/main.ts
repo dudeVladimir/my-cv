@@ -12,20 +12,17 @@ import './styles/style.scss';
 import { isThemeName } from './ui-config/types';
 
 // =======================
-// Подключение темы, если была выбрана другая
-
+// Select themes
 const currentTheme = localStorage.getItem('themeName');
 if (currentTheme && isThemeName(currentTheme)) {
   connectThemes(document.documentElement, currentTheme);
 }
-
 // =======================
 
 const app = createApp(App);
 const pinia = createPinia();
 
-console.time('loading');
-console.log('load main elements');
+console.time('load main elements');
 initMainElements().then(({ modules, uiKit }) => {
   const routes: RouteRecordRaw[] = [];
   if (Array.isArray(modules?.routes)) {
@@ -48,5 +45,5 @@ initMainElements().then(({ modules, uiKit }) => {
     });
   }
 
-  console.timeEnd('loading');
+  console.timeEnd('load main elements');
 });

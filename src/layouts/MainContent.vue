@@ -1,8 +1,8 @@
 <template>
   <div class="main-content">
-    <div class="main-content__body">
+    <main class="main-content__body">
       <RouterView />
-    </div>
+    </main>
     <footer class="main-content__footer">
       some footer
     </footer>

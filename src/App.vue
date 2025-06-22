@@ -8,12 +8,11 @@
 <script lang="ts" setup>
 import TheHeader from './components/TheHeader.vue';
 import MainContent from './layouts/MainContent.vue';
-
 import { useCoreStore } from './store';
 
-const core = useCoreStore();
+const { initApp } = useCoreStore();
 
-core.initApp();
+initApp();
 </script>
 
 <style lang="scss" scoped>

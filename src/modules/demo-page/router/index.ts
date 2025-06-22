@@ -1,6 +1,7 @@
+import { isDev } from '@/helpers';
 import { RouteRecordRaw } from 'vue-router';
 
-const routes: RouteRecordRaw[] = [
+const routes: RouteRecordRaw[] = isDev ? [
   {
     name: 'main-demo-page',
     path: '/demo',
@@ -26,6 +27,6 @@ const routes: RouteRecordRaw[] = [
       },
     ],
   },
-];
+] : [];
 
 export default routes;

@@ -7,11 +7,7 @@
     </div>
     <div class="the-header__center" />
     <div class="the-header__right">
-      <div
-        v-if="isDev"
-        class="dev-container"
-      />
-      <RouterLink :to="{ name: 'main-demo-page' }">
+      <RouterLink v-if="isDev" :to="{ name: 'main-demo-page' }">
         demo
       </RouterLink>
     </div>
