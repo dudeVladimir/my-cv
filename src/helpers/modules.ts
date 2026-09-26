@@ -1,8 +1,7 @@
-import demoConfig from '@/modules/demo-page/config';
 import { ConfigObject } from '@/modules/types';
 import type { Component } from 'vue';
 import type { RouteRecordRaw } from 'vue-router';
-import { isDev, isObject } from '.';
+import { isObject } from '.';
 
 type Module<T> = () => Promise<{ default: T }>;
 type ModuleConfig = Record<string, Module<ConfigObject>>;
@@ -81,9 +80,6 @@ async function initModulesConfig() {
 
   const routes: RouteRecordRaw[] = [];
   moduleList.forEach((module) => {
-    if (demoConfig.name === module.name && !isDev)
-      return; // skip demo module in production
-
     if (!Array.isArray(module.routes)) return;
     routes.push(...module.routes);
   });
@@ -111,8 +107,8 @@ async function initUiKit() {
  */
 export async function initMainElements() {
   const [modules, uiKit] = await Promise.allSettled([
-    await initModulesConfig(),
-    await initUiKit(),
+    initModulesConfig(),
+    initUiKit(),
   ]);
 
   return {

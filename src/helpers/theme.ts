@@ -1,6 +1,30 @@
 import themes from '@/ui-config/themes';
-import { ColorName, ThemeColors, ThemeName, ThemeObj } from '@/ui-config/types';
+import { ColorName, isThemeName, ThemeColors, ThemeName, ThemeObj } from '@/ui-config/types';
 import { hasKeyInObject } from '.';
+
+export const THEME_STORAGE_KEY = 'themeName';
+export const DARK_SCHEME_QUERY = '(prefers-color-scheme: dark)';
+
+/**
+ * Returns the theme name chosen by the user and saved in localStorage.
+ *
+ * @returns {ThemeName | null} The saved theme name, or null if the user has not chosen a theme.
+ */
+export function getSavedThemeName(): ThemeName | null {
+  const themeName = localStorage.getItem(THEME_STORAGE_KEY);
+  return themeName && isThemeName(themeName) ? themeName : null;
+}
+
+/**
+ * Returns the default theme name that matches the system color scheme.
+ *
+ * @returns {ThemeName} `default_dark` if the system prefers a dark scheme, otherwise `default_light`.
+ */
+export function getSystemThemeName(): ThemeName {
+  return window.matchMedia(DARK_SCHEME_QUERY).matches
+    ? 'default_dark'
+    : 'default_light';
+}
 
 /**
  * Converts a hex color string to an RGB object.

@@ -1,5 +1,9 @@
 import { initMainElements } from '_helpers/modules';
-import { connectThemes } from '_helpers/theme';
+import {
+  connectThemes,
+  getSavedThemeName,
+  getSystemThemeName,
+} from '_helpers/theme';
 import { createPinia } from 'pinia';
 import { createApp } from 'vue';
 import {
@@ -9,14 +13,13 @@ import {
 } from 'vue-router';
 import App from './App.vue';
 import './styles/style.scss';
-import { isThemeName } from './ui-config/types';
 
 // =======================
 // Select themes
-const currentTheme = localStorage.getItem('themeName');
-if (currentTheme && isThemeName(currentTheme)) {
-  connectThemes(document.documentElement, currentTheme);
-}
+connectThemes(
+  document.documentElement,
+  getSavedThemeName() ?? getSystemThemeName(),
+);
 // =======================
 
 const app = createApp(App);

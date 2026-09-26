@@ -2,9 +2,6 @@ module.exports = {
   env: {
     node: true,
   },
-  vue: {
-    vueVersion: 3,
-  },
   extends: [
     'eslint:recommended',
     'plugin:vue/vue3-recommended',

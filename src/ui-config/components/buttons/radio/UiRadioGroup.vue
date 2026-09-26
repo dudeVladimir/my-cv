@@ -25,7 +25,6 @@ import { computed } from 'vue';
 import type { Item, ItemValueOrText, Value } from './types';
 import { findReturnValue } from './helpers';
 
-const UiRadioItem = () => './UiRadioItem.vue';
 interface Props {
   modelValue: Value;
   items: Item[];

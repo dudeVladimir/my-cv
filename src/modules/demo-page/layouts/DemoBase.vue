@@ -5,11 +5,22 @@
         Темы:
       </div>
       <ul class="section__body grid-ui-kit theme-buttons">
+        <li>
+          <UiButton
+            :variant="isSystemTheme ? 'primary' : 'default'"
+            @click="followSystemTheme"
+          >
+            Как в системе
+          </UiButton>
+        </li>
         <li
           v-for="(item, key) in uiConfig.themes"
           :key="key"
         >
-          <UiButton @click="themeHandler(item.name)">
+          <UiButton
+            :variant="!isSystemTheme && selectedTheme === item.name ? 'primary' : 'default'"
+            @click="themeHandler(item.name)"
+          >
             {{ item.description }}
           </UiButton>
         </li>
@@ -85,8 +96,8 @@ const fontClasses = [
 ];
 
 const themesStore = useThemesStore();
-const { changeTheme } = themesStore;
-const { selectedTheme } = storeToRefs(themesStore);
+const { changeTheme, followSystemTheme } = themesStore;
+const { selectedTheme, isSystemTheme } = storeToRefs(themesStore);
 
 const colors = uiConfig.themes[selectedTheme.value].colors;
 
