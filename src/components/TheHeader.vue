@@ -1,7 +1,7 @@
 <template>
   <header class="the-header">
     <div class="the-header__left">
-      <div class="header-m-3">
+      <div class="header-m-4">
         dude.vladimir CV
       </div>
     </div>

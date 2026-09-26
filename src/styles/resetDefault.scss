@@ -10,6 +10,14 @@ body,
   height: 100%;
 }
 
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  letter-spacing: inherit;
+}
+
 ul {
   list-style: none;
 }

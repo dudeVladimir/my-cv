@@ -1,109 +1,62 @@
+@use 'sass:map';
+
+// region font-face
+// Шрифты — вариативные, сабсет латиница + кириллица (public/fonts)
+@font-face {
+  font-family: 'Manrope';
+  src: url('/fonts/Manrope-Variable.woff2') format('woff2');
+  font-weight: 200 800;
+  font-style: normal;
+  font-display: swap;
+}
+
 @font-face {
   font-family: 'Comfortaa';
-  src:
-    local('Comfortaa'),
-    url('/fonts/Comfortaa-VariableFont_wght.ttf') format('truetype');
+  src: url('/fonts/Comfortaa-Variable.woff2') format('woff2');
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+// endregion font-face
+
+$font-family-text: 'Manrope', system-ui, sans-serif;
+$font-family-header: 'Comfortaa', $font-family-text;
+
+$font-weights: (
+  1: 300,
+  2: 400,
+  3: 500,
+  4: 600,
+);
+
+$text-sizes: (
+  xs: (size: 0.75rem, line-height: 1.5, letter-spacing: 0.01em),
+  s: (size: 0.875rem, line-height: 1.5, letter-spacing: 0),
+  m: (size: 1rem, line-height: 1.6, letter-spacing: 0),
+  l: (size: 1.125rem, line-height: 1.6, letter-spacing: 0),
+);
+
+$header-sizes: (
+  s: (size: 1.25rem, line-height: 1.35, letter-spacing: -0.01em),
+  m: (size: 1.5rem, line-height: 1.3, letter-spacing: -0.01em),
+  l: (size: 2rem, line-height: 1.2, letter-spacing: -0.02em),
+  xl: (size: 2.5rem, line-height: 1.15, letter-spacing: -0.02em),
+);
+
+// .<prefix>-<size>-<weight>, например .text-m-2, .header-l-4
+@mixin font-classes($prefix, $family, $sizes) {
+  @each $size-name, $params in $sizes {
+    @each $weight-name, $weight in $font-weights {
+      .#{$prefix}-#{$size-name}-#{$weight-name} {
+        font-family: $family;
+        font-size: map.get($params, size);
+        font-weight: $weight;
+        line-height: map.get($params, line-height);
+        letter-spacing: map.get($params, letter-spacing);
+      }
+    }
+  }
 }
 
-$font-xs-size: 12px;
-$font-s-size: 14px;
-$font-m-size: 16px;
-$font-l-size: 20px;
-$header-m-size: 24px;
-$header-l-size: 28px;
-$header-xl-size: 32px;
-
-$font-1-weight: 300;
-$font-2-weight: 400;
-$font-3-weight: 600;
-
-.text-xs-1 {
-  font-size: $font-xs-size;
-  font-weight: $font-1-weight;
-}
-.text-xs-2 {
-  font-size: $font-xs-size;
-  font-weight: $font-2-weight;
-}
-.text-xs-3 {
-  font-size: $font-xs-size;
-  font-weight: $font-3-weight;
-}
-
-.text-s-1 {
-  font-size: $font-s-size;
-  font-weight: $font-1-weight;
-}
-.text-s-2 {
-  font-size: $font-s-size;
-  font-weight: $font-2-weight;
-}
-.text-s-3 {
-  font-size: $font-s-size;
-  font-weight: $font-3-weight;
-}
-
-.text-m-1 {
-  font-size: $font-m-size;
-  font-weight: $font-1-weight;
-}
-.text-m-2 {
-  font-size: $font-m-size;
-  font-weight: $font-2-weight;
-}
-.text-m-3 {
-  font-size: $font-m-size;
-  font-weight: $font-3-weight;
-}
-
-.text-l-1 {
-  font-size: $font-l-size;
-  font-weight: $font-1-weight;
-}
-.text-l-2 {
-  font-size: $font-l-size;
-  font-weight: $font-2-weight;
-}
-.text-l-3 {
-  font-size: $font-l-size;
-  font-weight: $font-3-weight;
-}
-
-.header-m-1 {
-  font-size: $header-m-size;
-  font-weight: $font-1-weight;
-}
-.header-m-2 {
-  font-size: $header-m-size;
-  font-weight: $font-2-weight;
-}
-.header-m-3 {
-  font-size: $header-m-size;
-  font-weight: $font-3-weight;
-}
-
-.header-l-1 {
-  font-size: $header-l-size;
-  font-weight: $font-1-weight;
-}
-.header-l-2 {
-  font-size: $header-l-size;
-  font-weight: $font-2-weight;
-}
-.header-l-3 {
-  font-size: $header-l-size;
-  font-weight: $font-3-weight;
-}
-
-.header-xl-1 {
-  font-size: $header-xl-size;
-  font-weight: $font-1-weight;
-}
-.header-xl-2 {
-  font-size: $header-xl-size;
-  font-weight: $font-2-weight;
-}
-.header-xl-3 {
-  font-size: $header-xl-size;
-  font-weight: $font-3-weight;
-}
+@include font-classes(text, $font-family-text, $text-sizes);
+@include font-classes(header, $font-family-header, $header-sizes);

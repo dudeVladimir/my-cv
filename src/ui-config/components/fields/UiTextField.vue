@@ -42,7 +42,7 @@
             :id="id"
             ref="nativeInput"
             v-model="_value"
-            class="text-m-1"
+            class="text-m-2"
             :class="{
               'th_text--text': !disabled,
               'th_text_muted--text': disabled,

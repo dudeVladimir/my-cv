@@ -74,29 +74,15 @@ import uiConfig from '@/ui-config';
 import { ThemeName } from '@/ui-config/types';
 import { storeToRefs } from 'pinia';
 
-const fontClasses = [
-  'text-xs-1',
-  'text-xs-2',
-  'text-xs-3',
-  'text-s-1',
-  'text-s-2',
-  'text-s-3',
-  'text-m-1',
-  'text-m-2',
-  'text-m-3',
-  'text-l-1',
-  'text-l-2',
-  'text-l-3',
-  'header-m-1',
-  'header-m-2',
-  'header-m-3',
-  'header-l-1',
-  'header-l-2',
-  'header-l-3',
-  'header-xl-1',
-  'header-xl-2',
-  'header-xl-3',
-];
+// Повторяет матрицу из src/styles/fonts.scss
+const fontWeights = [1, 2, 3, 4];
+const fontSizes = {
+  text: ['xs', 's', 'm', 'l'],
+  header: ['s', 'm', 'l', 'xl'],
+};
+const fontClasses = Object.entries(fontSizes).flatMap(([prefix, sizes]) => (
+  sizes.flatMap((size) => fontWeights.map((weight) => `${prefix}-${size}-${weight}`))
+));
 
 const themesStore = useThemesStore();
 const { changeTheme, followSystemTheme } = themesStore;
@@ -121,8 +107,9 @@ const themeHandler = (name: ThemeName) => {
         width: fit-content;
         margin: 0 auto;
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        gap: 12px;
+        grid-template-columns: repeat(4, auto);
+        align-items: baseline;
+        gap: 12px 24px;
       }
       &.color-list {
         display: grid;

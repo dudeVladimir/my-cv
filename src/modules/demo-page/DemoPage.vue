@@ -1,6 +1,6 @@
 <template>
   <div class="demo-page default-wrapper">
-    <div class="demo-page__header header-xl-3">
+    <div class="demo-page__header header-xl-4">
       demo page
     </div>
 

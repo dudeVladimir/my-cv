@@ -4,7 +4,7 @@
     :class="`ui-button_${variant}`"
     :disabled="disabled"
   >
-    <div class="ui-button__content">
+    <div class="ui-button__content text-s-3">
       <div class="main-container">
         <slot />
       </div>
