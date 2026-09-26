@@ -13,6 +13,16 @@ export type ThemeColors = {
   th_surface: string;
   /** Subtle fills: disabled states, hover backgrounds */
   th_surface_muted: string;
+  /**
+   * Elevated blocks (elevated card). In dark themes it is lighter than th_surface:
+   * shadows are barely visible on a dark background
+   */
+  th_surface_raised: string;
+  /**
+   * Shadow color, used with a fixed alpha: color-mix(in srgb, var(--th_shadow) 30%, transparent).
+   * Shadow strength is tuned by the color: lighter color — weaker shadow
+   */
+  th_shadow: string;
   // endregion surfaces
 
   // region text

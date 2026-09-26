@@ -7,6 +7,8 @@ const default_dark: ThemeObj = {
     th_bg: '#161616',
     th_surface: '#1F1F1F',
     th_surface_muted: '#262626',
+    th_surface_raised: '#2E2E2E',
+    th_shadow: '#000000',
 
     th_text: '#E6E6E6',
     th_text_muted: '#A3A3A3',

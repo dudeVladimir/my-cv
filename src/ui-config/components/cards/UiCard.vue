@@ -197,8 +197,8 @@ function actionClickHandler($event: MouseEvent) {
   }
 
   &_elevated {
-    background: var(--th_surface);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06), 0 4px 16px rgba(0, 0, 0, 0.06);
+    background: var(--th_surface_raised);
+    box-shadow: 0 1px 2px color-mix(in srgb, var(--th_shadow) 30%, transparent), 0 4px 16px color-mix(in srgb, var(--th_shadow) 30%, transparent);
   }
 
   &_accent::before {
@@ -319,7 +319,7 @@ function actionClickHandler($event: MouseEvent) {
     }
 
     &.ui-card_elevated:hover {
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08), 0 8px 24px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 2px 4px color-mix(in srgb, var(--th_shadow) 40%, transparent), 0 8px 24px color-mix(in srgb, var(--th_shadow) 50%, transparent);
     }
 
     &:has(.ui-card__action:active) {
