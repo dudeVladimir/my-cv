@@ -43,10 +43,10 @@ withDefaults(defineProps<Props>(), {
 
   &_default {
     &:hover:enabled {
-      background: rgba(var(--th_text_rgb), 0.06);
+      background: color-mix(in srgb, var(--th_text) 6%, transparent);
     }
     &:active:enabled {
-      background: rgba(var(--th_text_rgb), 0.1);
+      background: color-mix(in srgb, var(--th_text) 10%, transparent);
     }
   }
 
@@ -55,15 +55,15 @@ withDefaults(defineProps<Props>(), {
 
     &:hover:enabled {
       color: var(--th_accent_hover);
-      background: rgba(var(--th_accent_rgb), 0.08);
+      background: color-mix(in srgb, var(--th_accent) 8%, transparent);
     }
     &:active:enabled {
-      background: rgba(var(--th_accent_rgb), 0.14);
+      background: color-mix(in srgb, var(--th_accent) 14%, transparent);
     }
   }
 
   &:focus-visible {
-    outline: 2px solid rgba(var(--th_accent_rgb), 0.5);
+    outline: 2px solid color-mix(in srgb, var(--th_accent) 50%, transparent);
     outline-offset: 2px;
   }
 

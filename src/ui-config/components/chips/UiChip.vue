@@ -116,12 +116,12 @@ function mainClickHandler($event: MouseEvent) {
 
   &_selected {
     border-color: var(--th_accent);
-    background: rgba(var(--th_accent_rgb), 0.12);
+    background: color-mix(in srgb, var(--th_accent) 12%, transparent);
     color: var(--th_accent);
 
     &:not(.ui-chip_disabled):hover {
       border-color: var(--th_accent_hover);
-      background: rgba(var(--th_accent_rgb), 0.18);
+      background: color-mix(in srgb, var(--th_accent) 18%, transparent);
       color: var(--th_accent_hover);
     }
   }
@@ -146,7 +146,7 @@ function mainClickHandler($event: MouseEvent) {
     }
 
     &:focus-visible {
-      outline: 2px solid rgba(var(--th_accent_rgb), 0.5);
+      outline: 2px solid color-mix(in srgb, var(--th_accent) 50%, transparent);
       outline-offset: 2px;
     }
 
@@ -196,7 +196,7 @@ function mainClickHandler($event: MouseEvent) {
 
     &:hover:enabled {
       opacity: 1;
-      background: rgba(var(--th_text_rgb), 0.1);
+      background: color-mix(in srgb, var(--th_text) 10%, transparent);
     }
   }
 }

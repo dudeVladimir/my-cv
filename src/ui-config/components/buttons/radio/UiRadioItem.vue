@@ -115,7 +115,7 @@ function selectItem() {
   }
 
   &__input:focus-visible + &__marker {
-    outline: 2px solid rgba(var(--th_accent_rgb), 0.5);
+    outline: 2px solid color-mix(in srgb, var(--th_accent) 50%, transparent);
     outline-offset: 2px;
   }
 

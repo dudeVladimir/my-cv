@@ -50,22 +50,22 @@ withDefaults(defineProps<Props>(), {
     }
     &:active:enabled {
       border-color: var(--th_text_muted);
-      background: rgba(var(--th_text_rgb), 0.14);
+      background: color-mix(in srgb, var(--th_text) 14%, transparent);
     }
   }
 
   &_primary {
     color: var(--th_accent);
-    background: rgba(var(--th_accent_rgb), 0.06);
+    background: color-mix(in srgb, var(--th_accent) 6%, transparent);
     border-color: var(--th_accent);
 
     &:hover:enabled {
       color: var(--th_accent_hover);
       border-color: var(--th_accent_hover);
-      background: rgba(var(--th_accent_rgb), 0.12);
+      background: color-mix(in srgb, var(--th_accent) 12%, transparent);
     }
     &:active:enabled {
-      background: rgba(var(--th_accent_rgb), 0.18);
+      background: color-mix(in srgb, var(--th_accent) 18%, transparent);
     }
   }
 
@@ -74,7 +74,7 @@ withDefaults(defineProps<Props>(), {
   }
 
   &:focus-visible {
-    outline: 2px solid rgba(var(--th_accent_rgb), 0.5);
+    outline: 2px solid color-mix(in srgb, var(--th_accent) 50%, transparent);
     outline-offset: 2px;
   }
 

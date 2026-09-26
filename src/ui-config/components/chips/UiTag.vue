@@ -50,7 +50,7 @@ defineSlots<Slots>();
 
   @each $color in accent, success, warning, error {
     &_#{$color} {
-      background: rgba(var(--th_#{$color}_rgb), 0.12);
+      background: color-mix(in srgb, var(--th_#{$color}) 12%, transparent);
       color: var(--th_#{$color});
     }
   }

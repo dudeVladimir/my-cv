@@ -198,7 +198,7 @@ defineExpose({
 
   &__control:focus-within {
     border-color: var(--th_accent);
-    box-shadow: 0 0 0 3px rgba(var(--th_accent_rgb), 0.2);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--th_accent) 20%, transparent);
   }
 
   &__prepend,
@@ -286,7 +286,7 @@ defineExpose({
       border-color: var(--th_error);
     }
     .ui-text-field__control:focus-within {
-      box-shadow: 0 0 0 3px rgba(var(--th_error_rgb), 0.2);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--th_error) 20%, transparent);
     }
     .ui-text-field__input:focus + .ui-text-field__label,
     .ui-text-field__message {
