@@ -24,64 +24,54 @@
 
     <div class="section mt-8">
       <div class="section__header header-l-2">
-        Чип-фильтр (v-model):
+        Чип (v-model):
       </div>
       <div class="section__body grid-ui-kit">
-        <div class="demo-chips__row">
+        <div
+          v-for="size in sizes"
+          :key="size"
+          class="demo-chips__row"
+        >
           <UiChip
-            v-for="tech in techs"
-            :key="tech"
-            :model-value="selectedTechs.includes(tech)"
-            @update:model-value="toggleTech(tech, $event)"
+            v-for="(_, idx) in selected"
+            :key="idx"
+            v-model="selected[idx]"
+            :size="size"
           >
-            {{ tech }}
+            Чип {{ idx + 1 }}
           </UiChip>
-        </div>
-        <div class="demo-chips__row">
-          <UiChip
-            v-for="tech in techs"
-            :key="tech"
-            :model-value="selectedTechs.includes(tech)"
-            size="s"
-            @update:model-value="toggleTech(tech, $event)"
-          >
-            {{ tech }}
-          </UiChip>
-        </div>
-        <div class="text-s-2 th_text_muted--text">
-          Выбрано: {{ selectedTechs.join(', ') || '—' }}
         </div>
       </div>
     </div>
 
     <div class="section mt-8">
       <div class="section__header header-l-2">
-        Удаляемые, кликабельные, disabled:
+        Удаляемый, кликабельный, disabled:
       </div>
       <div class="section__body grid-ui-kit">
         <div class="demo-chips__row">
           <UiChip
-            v-for="tech in removableTechs"
-            :key="tech"
+            v-for="chip in removable"
+            :key="chip"
             removable
-            :remove-label="`Удалить ${tech}`"
-            @remove-clicked="removeTech(tech)"
+            :remove-label="`Удалить ${chip}`"
+            @remove-clicked="removable = removable.filter(item => item !== chip)"
           >
-            {{ tech }}
+            {{ chip }}
           </UiChip>
           <UiButton
-            v-if="removableTechs.length < techs.length"
-            @click="removableTechs = [...techs]"
+            v-if="removable.length < removableInitial.length"
+            @click="removable = [...removableInitial]"
           >
             Вернуть
           </UiButton>
         </div>
         <div class="demo-chips__row">
           <UiChip @click="clickCount++">
-            Кликнут {{ clickCount }} раз
+            Нажат {{ clickCount }} раз
           </UiChip>
           <UiChip
-            v-model="disabledSelected"
+            :model-value="true"
             disabled
           >
             Disabled выбран
@@ -101,25 +91,15 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const sizes = ['s', 'm'] as const;
+const sizes = ['m', 's'] as const;
 const tagColors = ['neutral', 'accent', 'success', 'warning', 'error'] as const;
 
-const techs = ['Vue 3', 'TypeScript', 'Pinia', 'Vite', 'SCSS'];
+const selected = ref([true, false, false, false]);
 
-const selectedTechs = ref<string[]>(['Vue 3']);
-function toggleTech(tech: string, isSelected: boolean) {
-  selectedTechs.value = isSelected
-    ? [...selectedTechs.value, tech]
-    : selectedTechs.value.filter(item => item !== tech);
-};
-
-const removableTechs = ref([...techs]);
-function removeTech(tech: string) {
-  removableTechs.value = removableTechs.value.filter(item => item !== tech);
-};
+const removableInitial = ['Чип 1', 'Чип 2', 'Чип 3'];
+const removable = ref([...removableInitial]);
 
 const clickCount = ref(0);
-const disabledSelected = ref(true);
 </script>
 
 <style lang="scss" scoped>

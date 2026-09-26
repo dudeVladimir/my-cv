@@ -95,6 +95,7 @@ import uiConfig from '@/ui-config';
 import { icons, type IconName } from '@/ui-config/icons';
 import { ThemeName } from '@/ui-config/types';
 import { storeToRefs } from 'pinia';
+import { computed } from 'vue';
 
 // Повторяет матрицу из src/styles/fonts.scss
 const fontWeights = [1, 2, 3, 4];
@@ -112,7 +113,7 @@ const themesStore = useThemesStore();
 const { changeTheme, followSystemTheme } = themesStore;
 const { selectedTheme, isSystemTheme } = storeToRefs(themesStore);
 
-const colors = uiConfig.themes[selectedTheme.value].colors;
+const colors = computed(() => uiConfig.themes[selectedTheme.value].colors);
 
 const themeHandler = (name: ThemeName) => {
   changeTheme(name);
