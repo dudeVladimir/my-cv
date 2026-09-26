@@ -187,16 +187,23 @@ function actionClickHandler($event: MouseEvent) {
   transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s, transform 0.1s;
 
   // region variants
+  // --ui-surface — фон контейнера для полей внутри (UiTextField)
   &_outlined {
+    --ui-surface: var(--th_surface);
+
     background: var(--th_surface);
     border-color: var(--th_border);
   }
 
   &_filled {
+    --ui-surface: var(--th_surface_muted);
+
     background: var(--th_surface_muted);
   }
 
   &_elevated {
+    --ui-surface: var(--th_surface_raised);
+
     background: var(--th_surface_raised);
     box-shadow: 0 1px 2px color-mix(in srgb, var(--th_shadow) 30%, transparent), 0 4px 16px color-mix(in srgb, var(--th_shadow) 30%, transparent);
   }

@@ -187,7 +187,8 @@ defineExpose({
     padding: 0 12px;
     border: var(--field-border) solid var(--th_border_strong);
     border-radius: 6px;
-    background: var(--th_surface);
+    // Фон контейнера, если он его задаёт (UiCard): поле не выделяется на нём другим тоном
+    background: var(--ui-surface, var(--th_surface));
     cursor: text;
     transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
   }
