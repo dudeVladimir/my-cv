@@ -1,65 +1,67 @@
 <template>
   <div
+    v-bind="pickRootAttrs($attrs)"
     class="ui-text-field"
     :class="{
-      'ui-text-field_focused': isFocused,
       'ui-text-field_disabled': disabled,
-      'ui-text-field_has-value': hasValue,
+      'ui-text-field_invalid': !!error,
+      'ui-text-field_labeled': !!label,
     }"
   >
     <div
-      class="ui-text-field__main"
-      :class="{
-        'ui-text-field__main_disabled': disabled,
-      }"
-      @click="inputMainClick"
+      class="ui-text-field__control"
+      @click="setFocus"
     >
       <div
         v-if="slots.prepend"
-        class="content-prepend"
+        class="ui-text-field__prepend"
       >
         <slot name="prepend" />
       </div>
-      <div class="content-main">
+      <div class="ui-text-field__body">
+        <!-- name, autocomplete, inputmode и т.п. уходят на input; class и style — на корень -->
+        <input
+          v-bind="omitRootAttrs($attrs)"
+          :id="id"
+          ref="nativeInput"
+          v-model="_value"
+          class="ui-text-field__input text-m-2"
+          :type="type"
+          :disabled="disabled"
+          :required="required"
+          :placeholder="placeholder || (label ? ' ' : undefined)"
+          :aria-invalid="!!error || undefined"
+          :aria-describedby="message ? messageId : undefined"
+          @focus="focusHandler"
+          @blur="blurHandler"
+        >
+        <!-- Метка после input: плавает через `input:focus + label` и `:placeholder-shown` -->
         <label
           v-if="label"
           :for="id"
-          class="input--label text-xs-2"
-          :class="{
-            'th_text--text': !disabled,
-            'th_text_muted--text': disabled,
-          }"
+          class="ui-text-field__label text-m-2"
         >
           {{ label }}
+          <span
+            v-if="required"
+            class="ui-text-field__required"
+            aria-hidden="true"
+          >*</span>
         </label>
-        <div
-          class="input--wrapper"
-          :class="{
-            'input--wrapper_has-label': !!label,
-          }"
-        >
-          <input
-            :id="id"
-            ref="nativeInput"
-            v-model="_value"
-            class="text-m-2"
-            :class="{
-              'th_text--text': !disabled,
-              'th_text_muted--text': disabled,
-            }"
-            :type="type"
-            :disabled="disabled"
-            @focus="focusHandler"
-            @blur="blurHandler"
-          >
-        </div>
       </div>
       <div
         v-if="slots.append"
-        class="content-append"
+        class="ui-text-field__append"
       >
         <slot name="append" />
       </div>
+    </div>
+    <div
+      v-if="message"
+      :id="messageId"
+      class="ui-text-field__message text-xs-2"
+    >
+      {{ message }}
     </div>
   </div>
 </template>
@@ -69,11 +71,14 @@ import { generateUiElementId } from '@/ui-config/helper';
 import { computed, ref, onMounted } from 'vue';
 
 type Value = string | number | null;
-type InputType = 'text' | 'number' | 'tel';
+type InputType = 'text' | 'number' | 'tel' | 'email';
 interface Props {
   modelValue?: Value;
   disabled?: boolean;
   label?: string;
+  placeholder?: string;
+  hint?: string;
+  error?: string;
   type?: InputType;
   autofocus?: boolean;
   trimmed?: boolean;
@@ -93,22 +98,41 @@ const props = withDefaults(defineProps<Props>(), {
   type: 'text',
   modelValue: null,
   label: '',
+  placeholder: '',
+  hint: '',
+  error: '',
 });
 const slots = defineSlots<Slots>();
 const emit = defineEmits<Emits>();
 
-const isNumber = computed(() => props.type === 'number');
-const hasValue = computed(() => (!isNumber.value && !!_value.value) || (isNumber.value && Number.isFinite(_value.value)));
+// region attrs
+defineOptions({ inheritAttrs: false });
+
+const ROOT_ATTRS = ['class', 'style'];
+// $attrs не реактивны в script, поэтому делятся при рендере, а не в computed
+function pickRootAttrs(attrs: Record<string, unknown>) {
+  return Object.fromEntries(Object.entries(attrs).filter(([key]) => ROOT_ATTRS.includes(key)));
+};
+function omitRootAttrs(attrs: Record<string, unknown>) {
+  return Object.fromEntries(Object.entries(attrs).filter(([key]) => !ROOT_ATTRS.includes(key)));
+};
+// endregion attrs
 
 const nativeInput = ref<HTMLInputElement>();
 const id = generateUiElementId('text_field');
+const messageId = `${id}_message`;
+
+// Ошибка важнее подсказки
+const message = computed(() => props.error || props.hint);
+
 const _value = computed({
   get: () => props.modelValue,
   set: v => {
     let newValue = v;
 
-    if (isNumber.value && v !== null) {
-      const toNumberV = +v;
+    if (props.type === 'number') {
+      // Пустое поле — null, а не 0 (+'' === 0)
+      const toNumberV = v === null || v === '' ? NaN : +v;
       newValue = Number.isFinite(toNumberV) ? toNumberV : null;
     }
 
@@ -117,13 +141,10 @@ const _value = computed({
 });
 
 // region focus
-const isFocused = ref(false);
 function focusHandler($event: FocusEvent) {
-  isFocused.value = true;
   emit('focus', $event);
 };
 function blurHandler($event: FocusEvent) {
-  isFocused.value = false;
   if (props.trimmed && typeof _value.value === 'string')
     _value.value = _value.value.trim();
 
@@ -138,10 +159,6 @@ function setFocus() {
 };
 // endregion focus
 
-function inputMainClick() {
-  setFocus();
-};
-
 onMounted(() => {
   if (props.autofocus)
     setFocus();
@@ -154,83 +171,140 @@ defineExpose({
 
 <style lang="scss" scoped>
 .ui-text-field {
-  &_focused {
-    .ui-text-field__main {
-      border-color: var(--th_accent);
-      background: rgba(var(--th_accent_rgb), 0.05);
-    }
-  }
+  // Геометрия в rem: поле и метка масштабируются вместе с корневым шрифтом.
+  // Позиции метки считаются от этих переменных — менять только их
+  --field-height: 3rem;
+  --field-border: 1px;
+  --field-line: 1.25rem;
+  --label-top: 0.3125rem;
+  --label-scale: 0.75;
 
-  // region label
-  &_has-value,
-  &_focused {
-    .ui-text-field__main {
-      .content {
-        &-main {
-          .input {
-            &--label {
-              top: unset;
-              bottom: unset;
-              font-size: 0.85em;
-            }
-          }
-        }
-      }
-    }
-  }
-  // endregion label
-
-  &__main {
-    position: relative;
+  &__control {
     display: flex;
-    flex-direction: column;
-    border: 1px solid var(--th_border_strong);
-    background: var(--th_surface);
+    align-items: center;
+    gap: 8px;
+    height: var(--field-height);
+    padding: 0 12px;
+    border: var(--field-border) solid var(--th_border_strong);
     border-radius: 6px;
-    height: 48px;
-    padding: 4px 8px;
+    background: var(--th_surface);
+    cursor: text;
+    transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+  }
 
-    transition: all ease-in-out .1s;
+  &:not(.ui-text-field_disabled, .ui-text-field_invalid) &__control:hover {
+    border-color: var(--th_text_muted);
+  }
 
-    &:hover {
-      &:not(.ui-text-field__main_disabled) {
-        border-color: var(--th_text_muted);
-      }
+  &__control:focus-within {
+    border-color: var(--th_accent);
+    box-shadow: 0 0 0 3px rgba(var(--th_accent_rgb), 0.2);
+  }
+
+  &__prepend,
+  &__append {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    color: var(--th_text_muted);
+  }
+
+  &__body {
+    position: relative;
+    flex: 1 1 auto;
+    align-self: stretch;
+    min-width: 0;
+  }
+
+  &__input {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--th_text);
+    line-height: var(--field-line);
+
+    &::placeholder {
+      color: var(--th_text_muted);
+      opacity: 1;
     }
+  }
 
-    &_disabled {
-      * {
-        cursor: not-allowed !important;
-      }
+  // Место под всплывшую метку
+  &_labeled &__input {
+    padding: calc(var(--label-top) + var(--field-line) * var(--label-scale) - 0.125rem) 0 0.25rem;
+  }
+
+  // Плейсхолдер не должен налезать на метку в покое
+  &_labeled &__input:not(:focus)::placeholder {
+    color: transparent;
+  }
+
+  &__label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    max-width: 100%;
+    overflow: hidden;
+    color: var(--th_text_muted);
+    line-height: var(--field-line);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    pointer-events: none;
+    // В покое — по центру внутренней высоты контрола
+    transform: translateY(calc((var(--field-height) - 2 * var(--field-border) - var(--field-line)) / 2));
+    transform-origin: 0 0;
+    transition: transform 0.15s ease-out, color 0.2s;
+  }
+
+  &__input:focus + &__label,
+  &__input:not(:placeholder-shown) + &__label {
+    max-width: calc(100% / var(--label-scale));
+    transform: translateY(var(--label-top)) scale(var(--label-scale));
+  }
+
+  &__input:focus + &__label {
+    color: var(--th_accent);
+  }
+
+  &__required {
+    color: var(--th_error);
+  }
+
+  &__message {
+    margin-top: 4px;
+    padding: 0 12px;
+    color: var(--th_text_muted);
+  }
+
+  &_invalid {
+    .ui-text-field__control {
+      border-color: var(--th_error);
     }
+    .ui-text-field__control:focus-within {
+      box-shadow: 0 0 0 3px rgba(var(--th_error_rgb), 0.2);
+    }
+    .ui-text-field__input:focus + .ui-text-field__label,
+    .ui-text-field__message {
+      color: var(--th_error);
+    }
+  }
 
-    .content {
-      // &-prepend {}
-      &-main {
-        position: relative;
-        height: 100%;
-        .input {
-          &--label {
-            transition: all .2s;
-            position: absolute;
-            display: flex;
-            align-items: center;
-            font-size: 1.5em;
-            top: 0;
-            bottom: 0;
-            max-width: 100%;
-          }
-          &--wrapper {
-            height: 100%;
-            width: 100%;
-
-            &_has-label {
-              padding-top: 14px;
-            }
-          }
-        }
-      }
-      // &-append {}
+  &_disabled {
+    .ui-text-field__control {
+      border-color: var(--th_border);
+      background: var(--th_surface_muted);
+      cursor: not-allowed;
+    }
+    .ui-text-field__input {
+      color: var(--th_text_muted);
+      cursor: not-allowed;
+      // Safari приглушает disabled-поле ещё и прозрачностью
+      opacity: 1;
     }
   }
 }
