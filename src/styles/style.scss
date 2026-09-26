@@ -19,25 +19,6 @@ body {
   line-height: 1.6;
 }
 
-a {
-  &.active-link {
-    &_exact {
-      color: var(--th_text_muted);
-      text-decoration: none;
-      cursor: default;
-    }
-  }
-
-  color: var(--th_text);
-  text-decoration: none;
-  cursor: pointer;
-
-  &:hover {
-    color: var(--th_accent);
-    text-decoration: underline;
-  }
-}
-
 button {
   border: 1px solid var(--th_border_strong);
   color: var(--th_text);

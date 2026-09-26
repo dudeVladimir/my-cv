@@ -10,9 +10,12 @@
         :key="idx"
         class="demo-links__item"
       >
-        <RouterLink :to="{ name: link.name }">
+        <UiLink
+          :to="{ name: link.name }"
+          variant="nav"
+        >
           {{ link.name }}
-        </RouterLink>
+        </UiLink>
       </li>
     </ul>
 
@@ -39,6 +42,7 @@ const linkList = [...(routes[0].children as Array<{ name: string }>), { name: 'm
 
   .demo-links {
     display: flex;
+    flex-wrap: wrap;
     gap: 12px;
     justify-content: space-between;
     // &__item

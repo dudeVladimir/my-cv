@@ -14,6 +14,7 @@ declare module 'vue' {
     UiCard: typeof import('./cards/UiCard.vue')['default']
     UiChip: typeof import('./chips/UiChip.vue')['default']
     UiIcon: typeof import('./icons/UiIcon.vue')['default']
+    UiLink: typeof import('./links/UiLink.vue')['default']
     UiRadioGroup: typeof import('./buttons/radio/UiRadioGroup.vue')['default']
     UiRadioItem: typeof import('./buttons/radio/UiRadioItem.vue')['default']
     UiTag: typeof import('./chips/UiTag.vue')['default']

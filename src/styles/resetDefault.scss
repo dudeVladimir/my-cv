@@ -22,6 +22,12 @@ ul {
   list-style: none;
 }
 
+// Вид ссылок задаёт UiLink, у голого <a> — только сброс
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
 button {
   display: block;
   background: transparent;

@@ -7,9 +7,13 @@
     </div>
     <div class="the-header__center" />
     <div class="the-header__right">
-      <RouterLink v-if="isDev" :to="{ name: 'main-demo-page' }">
+      <UiLink
+        v-if="isDev"
+        :to="{ name: 'main-demo-page' }"
+        variant="nav"
+      >
         demo
-      </RouterLink>
+      </UiLink>
     </div>
   </header>
 </template>
