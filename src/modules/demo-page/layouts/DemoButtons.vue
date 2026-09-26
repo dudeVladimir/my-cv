@@ -41,12 +41,18 @@
         />
         <UiRadioGroup
           v-model="radioValue"
-          :items="[...items, ...items, ...items, ...items]"
-        />
-        <UiRadioGroup
-          v-model="radioValue"
           :items="items"
           disabled
+        />
+        <UiRadioGroup
+          v-model="radioManyValue"
+          :items="manyItems"
+        />
+        <UiRadioGroup
+          v-model="radioObjectValue"
+          :items="objectItems"
+          item-text="label"
+          item-value="id"
         />
       </div>
     </div>
@@ -68,8 +74,17 @@ const items = [
   'some text 2',
   'Some_Text_3',
 ];
+const manyItems = Array.from({ length: 12 }, (_, idx) => `more-item-${idx + 1}`);
+
+const objectItems = [
+  { id: 1, label: 'Объект 1' },
+  { id: 2, label: 'Объект 2' },
+  { id: 3, label: 'Объект 3' },
+];
 
 const radioValue = ref<string>();
+const radioManyValue = ref<string>();
+const radioObjectValue = ref<number>(2);
 </script>
 
 <style lang="scss" scoped>
@@ -82,6 +97,9 @@ const radioValue = ref<string>();
       &.thin-buttons-variant {
         justify-items: center;
         grid-template-columns: 1fr 1fr 1fr;
+      }
+      &.radio-buttons-variant {
+        gap: 24px;
       }
       &.buttons-icon-variant {
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;

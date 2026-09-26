@@ -1,19 +1,20 @@
 import type { Item, ItemValueOrText, Value } from '../types';
 
-export function findReturnValue(selectedItem: Item, itemResult?: ItemValueOrText) {
-  if (typeof selectedItem === 'string')
-    return selectedItem;
+export function findReturnValue(item: Item, itemResult?: ItemValueOrText): Value {
+  if (typeof item === 'string')
+    return item;
 
-  let textContent: Value = undefined;
+  let result: unknown = undefined;
 
   if (typeof itemResult === 'string')
-    textContent = selectedItem?.[itemResult];
+    result = item[itemResult];
 
   if (typeof itemResult === 'function')
-    textContent = itemResult(selectedItem);
+    result = itemResult(item);
 
-  if (textContent && typeof textContent !== 'string' && !Number.isFinite(+textContent))
-    console.warn('wrong returned type');
+  if (result === undefined || typeof result === 'string' || typeof result === 'number')
+    return result;
 
-  return textContent;
+  console.warn('wrong returned type', result);
+  return undefined;
 };

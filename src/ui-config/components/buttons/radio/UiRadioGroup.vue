@@ -1,5 +1,9 @@
 <template>
-  <div class="ui-radio-group">
+  <div
+    class="ui-radio-group"
+    role="radiogroup"
+    :aria-disabled="disabled || undefined"
+  >
     <ul class="ui-radio-group__list">
       <li
         v-for="(item, idx) in items"
@@ -9,6 +13,7 @@
         <UiRadioItem
           class="radio-item__component"
           :item="item"
+          :name="name"
           :item-text="itemText"
           :item-value="itemValue"
           :disabled="disabled"
@@ -22,6 +27,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
+import { generateUiElementId } from '@/ui-config/helper';
 import type { Item, ItemValueOrText, Value } from './types';
 import { findReturnValue } from './helpers';
 
@@ -36,8 +42,14 @@ interface Emits {
   (ev: 'update:modelValue', v: Value): void;
 };
 
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+  itemText: 'text',
+  itemValue: 'value',
+});
 const emit = defineEmits<Emits>();
+
+// Общий name связывает input'ы в одну группу: стрелки, один выбранный
+const name = generateUiElementId('radio_group');
 
 const _value = computed({
   get: () => props.modelValue,
@@ -54,8 +66,13 @@ function selectItem(idx: number) {
 .ui-radio-group {
   &__list {
     display: flex;
-    gap: 12px;
+    gap: 8px 20px;
     flex-wrap: wrap;
+
+    // Без flex li берёт line-height родителя и становится выше метки
+    .radio-item {
+      display: flex;
+    }
   }
 }
 </style>
