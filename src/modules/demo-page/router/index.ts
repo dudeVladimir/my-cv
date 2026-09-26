@@ -25,6 +25,16 @@ const routes: RouteRecordRaw[] = isDev ? [
         name: 'demo-fields',
         component: () => import('../layouts/DemoFields.vue'),
       },
+      {
+        path: 'cards',
+        name: 'demo-cards',
+        component: () => import('../layouts/DemoCards.vue'),
+      },
+      {
+        path: 'chips',
+        name: 'demo-chips',
+        component: () => import('../layouts/DemoChips.vue'),
+      },
     ],
   },
 ] : [];

@@ -11,8 +11,11 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     UiButton: typeof import('./buttons/UiButton.vue')['default']
+    UiCard: typeof import('./cards/UiCard.vue')['default']
+    UiChip: typeof import('./chips/UiChip.vue')['default']
     UiRadioGroup: typeof import('./buttons/radio/UiRadioGroup.vue')['default']
     UiRadioItem: typeof import('./buttons/radio/UiRadioItem.vue')['default']
+    UiTag: typeof import('./chips/UiTag.vue')['default']
     UiTextField: typeof import('./fields/UiTextField.vue')['default']
     UiThinButton: typeof import('./buttons/UiThinButton.vue')['default']
   }
