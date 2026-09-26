@@ -18,14 +18,11 @@
       @click="mainClickHandler"
     >
       <!-- Галочка дублирует цвет: выбранное различимо и без него -->
-      <svg
+      <UiIcon
         v-if="modelValue"
+        name="check"
         class="ui-chip__check"
-        viewBox="0 0 16 16"
-        aria-hidden="true"
-      >
-        <path d="M3 8.5l3.2 3L13 4.5" />
-      </svg>
+      />
       <slot />
     </button>
     <button
@@ -36,12 +33,7 @@
       :aria-label="removeLabel"
       @click="emit('remove-clicked')"
     >
-      <svg
-        viewBox="0 0 16 16"
-        aria-hidden="true"
-      >
-        <path d="M4.5 4.5l7 7M11.5 4.5l-7 7" />
-      </svg>
+      <UiIcon name="close" />
     </button>
   </span>
 </template>
@@ -149,15 +141,6 @@ function mainClickHandler($event: MouseEvent) {
       outline: 2px solid color-mix(in srgb, var(--th_accent) 50%, transparent);
       outline-offset: 2px;
     }
-
-    svg {
-      flex: 0 0 auto;
-      fill: none;
-      stroke: currentColor;
-      stroke-width: 1.8;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
   }
 
   &__main {
@@ -189,7 +172,7 @@ function mainClickHandler($event: MouseEvent) {
     opacity: 0.7;
     transition: opacity 0.2s, background-color 0.2s;
 
-    svg {
+    .ui-icon {
       width: 12px;
       height: 12px;
     }

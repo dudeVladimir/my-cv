@@ -65,12 +65,34 @@
         </li>
       </ul>
     </div>
+
+    <div class="v-divider my-8" />
+
+    <div class="section">
+      <div class="section__header header-l-2">
+        Иконки:
+      </div>
+      <ul class="section__body icon-list">
+        <li
+          v-for="name in iconNames"
+          :key="name"
+          class="icon-list__item text-xs-2"
+        >
+          <UiIcon
+            :name="name"
+            class="icon-list__icon"
+          />
+          {{ name }}
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useThemesStore } from '@/store/themes';
 import uiConfig from '@/ui-config';
+import { icons, type IconName } from '@/ui-config/icons';
 import { ThemeName } from '@/ui-config/types';
 import { storeToRefs } from 'pinia';
 
@@ -83,6 +105,8 @@ const fontSizes = {
 const fontClasses = Object.entries(fontSizes).flatMap(([prefix, sizes]) => (
   sizes.flatMap((size) => fontWeights.map((weight) => `${prefix}-${size}-${weight}`))
 ));
+
+const iconNames = Object.keys(icons) as IconName[];
 
 const themesStore = useThemesStore();
 const { changeTheme, followSystemTheme } = themesStore;
@@ -127,6 +151,27 @@ const themeHandler = (name: ThemeName) => {
           height: 24px;
           border-radius: 6px;
           border: 1px solid var(--th_border_strong);
+        }
+      }
+      &.icon-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+        gap: 12px;
+
+        .icon-list__item {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 8px;
+          padding: 12px 8px;
+          border: 1px solid var(--th_border);
+          border-radius: 8px;
+          color: var(--th_text_muted);
+        }
+        .icon-list__icon {
+          width: 24px;
+          height: 24px;
+          color: var(--th_text);
         }
       }
     }
