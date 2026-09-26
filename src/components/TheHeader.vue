@@ -20,7 +20,8 @@ import { isDev } from '_helpers/index';
 
 <style lang="scss" scoped>
 .the-header {
-  background: var(--th_primary_background);
+  background: var(--th_surface);
+  border-bottom: 1px solid var(--th_border);
   padding: 20px;
 }
 </style>

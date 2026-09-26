@@ -31,7 +31,7 @@ withDefaults(defineProps<Props>(), {
   border: none;
   background: none;
   outline: none;
-  color: var(--th_main_text);
+  color: var(--th_text);
   padding: 4px 6px;
   cursor: pointer;
 
@@ -43,7 +43,7 @@ withDefaults(defineProps<Props>(), {
   }
 
   &:disabled {
-    color: var(--th_secondary_text);
+    color: var(--th_text_muted);
     cursor: not-allowed;
   }
 }

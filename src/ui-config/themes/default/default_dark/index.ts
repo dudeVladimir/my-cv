@@ -4,16 +4,23 @@ const default_dark: ThemeObj = {
   name: 'default_dark',
   description: 'Стандартная тема (темная)',
   colors: {
-    th_main_background: '#0D0D0D',
-    th_primary_background: '#1A1A1A',
-    th_secondary_background: '#222222',
-    th_main_accent: '#BE967E',
-    th_main_text: '#F9F9F9',
-    th_secondary_text: '#B0B0B0',
-    th_primary: '#F9F9F9',
-    th_error: '#FF5733',
+    th_bg: '#161616',
+    th_surface: '#1F1F1F',
+    th_surface_muted: '#262626',
 
-    th_white: '#FFFFFF',
+    th_text: '#E6E6E6',
+    th_text_muted: '#A3A3A3',
+
+    th_border: '#2C2C2C',
+    th_border_strong: '#4A4A4A',
+
+    th_accent: '#E08E6D',
+    th_accent_hover: '#E6A084',
+    th_on_accent: '#1A1A1A',
+
+    th_error: '#F07A72',
+    th_success: '#6CC592',
+    th_warning: '#E3B060',
   },
 };
 

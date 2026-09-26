@@ -6,16 +6,39 @@ const themeNames = {
 export type ThemeName = keyof typeof themeNames;
 
 export type ThemeColors = {
-  th_main_background: string;
-  th_primary_background: string;
-  th_secondary_background: string;
-  th_main_accent: string;
-  th_main_text: string;
-  th_secondary_text: string;
-  th_primary: string;
-  th_error: string;
+  // region surfaces
+  /** Page background */
+  th_bg: string;
+  /** Raised blocks: header, cards, fields */
+  th_surface: string;
+  /** Subtle fills: disabled states, hover backgrounds */
+  th_surface_muted: string;
+  // endregion surfaces
 
-  th_white: string;
+  // region text
+  th_text: string;
+  th_text_muted: string;
+  // endregion text
+
+  // region borders
+  /** Dividers and decorative borders */
+  th_border: string;
+  /** Borders of interactive elements */
+  th_border_strong: string;
+  // endregion borders
+
+  // region accent
+  th_accent: string;
+  th_accent_hover: string;
+  /** Text and icons on top of th_accent */
+  th_on_accent: string;
+  // endregion accent
+
+  // region statuses
+  th_error: string;
+  th_success: string;
+  th_warning: string;
+  // endregion statuses
 };
 
 export type ColorName = keyof ThemeColors;

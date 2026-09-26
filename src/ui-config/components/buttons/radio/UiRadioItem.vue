@@ -84,7 +84,7 @@ function selectItem() {
         border-radius: 50%;
         width: 20px;
         height: 20px;
-        border: 1px solid var(--th_main_text);
+        border: 1px solid var(--th_text_muted);
 
         &__inner {
           border-radius: inherit;
@@ -95,7 +95,7 @@ function selectItem() {
           transition: 0.1s;
 
           &_filled {
-            background: var(--th_main_accent);
+            background: var(--th_accent);
           }
         }
       }

@@ -1,14 +1,21 @@
 $default-colors: (
-  th_main_background: #f9f9f9,
-  th_primary_background: #ffffff,
-  th_secondary_background: #f5f5f5,
-  th_main_accent: #be967e,
-  th_main_text: #0d0d0d,
-  th_secondary_text: #777777,
-  th_primary: #0d0d0d,
-  th_error: #ff0000,
+  th_bg: #f7f7f7,
+  th_surface: #ffffff,
+  th_surface_muted: #ededed,
 
-  th_white: #ffffff
+  th_text: #1f1f1f,
+  th_text_muted: #666666,
+
+  th_border: #e4e4e4,
+  th_border_strong: #c4c4c4,
+
+  th_accent: #a8502f,
+  th_accent_hover: #8c3f24,
+  th_on_accent: #ffffff,
+
+  th_error: #c4312b,
+  th_success: #2e7a4e,
+  th_warning: #9a5b00
 );
 
 :root {

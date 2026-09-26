@@ -11,7 +11,7 @@
 
 <style lang="scss" scoped>
 .main-content {
-  background: var(--th_secondary_background);
+  background: var(--th_bg);
   display: flex;
   flex-direction: column;
   &__body {

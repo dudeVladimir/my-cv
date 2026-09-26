@@ -26,8 +26,8 @@
           :for="id"
           class="input--label text-xs-2"
           :class="{
-            'th_main_text--text': !disabled,
-            'th_secondary_text--text': disabled,
+            'th_text--text': !disabled,
+            'th_text_muted--text': disabled,
           }"
         >
           {{ label }}
@@ -44,8 +44,8 @@
             v-model="_value"
             class="text-m-1"
             :class="{
-              'th_main_text--text': !disabled,
-              'th_secondary_text--text': disabled,
+              'th_text--text': !disabled,
+              'th_text_muted--text': disabled,
             }"
             :type="type"
             :disabled="disabled"
@@ -156,7 +156,8 @@ defineExpose({
 .ui-text-field {
   &_focused {
     .ui-text-field__main {
-      background: rgba(var(--th_main_accent_rgb), 0.05);
+      border-color: var(--th_accent);
+      background: rgba(var(--th_accent_rgb), 0.05);
     }
   }
 
@@ -183,7 +184,8 @@ defineExpose({
     position: relative;
     display: flex;
     flex-direction: column;
-    border: 1px solid rgba(var(--th_main_accent_rgb), 0.5);
+    border: 1px solid var(--th_border_strong);
+    background: var(--th_surface);
     border-radius: 6px;
     height: 48px;
     padding: 4px 8px;
@@ -192,7 +194,7 @@ defineExpose({
 
     &:hover {
       &:not(.ui-text-field__main_disabled) {
-        border-color: rgba(var(--th_main_accent_rgb), 0.8);
+        border-color: var(--th_text_muted);
       }
     }
 

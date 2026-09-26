@@ -29,30 +29,37 @@ withDefaults(defineProps<Props>(), {
   transition: all 0.24s;
   padding: 7px 11px;
   border-radius: 6px;
-  border: 1px solid var(--th_main_text);
-  background: var(--th_main_background);
-  color: var(--th_main_text);
+  border: 1px solid var(--th_border_strong);
+  background: var(--th_surface);
+  color: var(--th_text);
   outline: none;
   cursor: pointer;
 
   &_default:hover:enabled {
-    box-shadow: 0px 0px 12px 2px rgba(var(--th_main_text_rgb), 0.2) inset;
+    border-color: var(--th_text_muted);
+    background: var(--th_surface_muted);
   }
   &_default:active:enabled {
-    box-shadow: 0px 0px 12px 2px rgba(var(--th_main_text_rgb), 0.4) inset;
+    box-shadow: 0px 0px 8px 1px rgba(var(--th_text_rgb), 0.15) inset;
+  }
+
+  &_primary {
+    color: var(--th_accent);
+    background: rgba(var(--th_accent_rgb), 0.06);
+    border-color: var(--th_accent);
+
+    &:hover:enabled {
+      color: var(--th_accent_hover);
+      border-color: var(--th_accent_hover);
+      background: rgba(var(--th_accent_rgb), 0.12);
+    }
   }
 
   &:disabled {
     cursor: not-allowed;
-    background: var(--th_secondary_background);
-    color: var(--th_secondary_text);
-    border-color: var(--th_primary);
-  }
-
-  &_primary {
-    color: var(--th_primary);
-    background: var(--th_primary_background);
-    border-color: var(--th_primary);
+    background: var(--th_surface_muted);
+    color: var(--th_text_muted);
+    border-color: var(--th_border);
   }
 }
 </style>

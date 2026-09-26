@@ -55,9 +55,12 @@
         <li
           v-for="(_, colorName) in colors"
           :key="colorName"
-          class="color-list__item text-m-3"
-          :class="`${colorName}--text`"
+          class="color-list__item text-s-2"
         >
+          <span
+            class="color-list__swatch"
+            :class="`${colorName}--background`"
+          />
           {{ colorName }}
         </li>
       </ul>
@@ -125,6 +128,19 @@ const themeHandler = (name: ThemeName) => {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr;
         gap: 12px;
+
+        .color-list__item {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+        .color-list__swatch {
+          flex: 0 0 auto;
+          width: 24px;
+          height: 24px;
+          border-radius: 6px;
+          border: 1px solid var(--th_border_strong);
+        }
       }
     }
   }

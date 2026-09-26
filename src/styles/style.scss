@@ -11,7 +11,8 @@ $w-laptop: 1280px;
 $w-desktop: 1440px;
 
 body {
-  color: var(--th_main_text);
+  background: var(--th_bg);
+  color: var(--th_text);
   font-family: 'Comfortaa', sans-serif;
   font-size: 14px;
   font-weight: 400;
@@ -20,32 +21,32 @@ body {
 a {
   &.active-link {
     &_exact {
-      color: var(--th_secondary_text);
+      color: var(--th_text_muted);
       text-decoration: none;
       cursor: default;
     }
   }
 
-  color: var(--th_main_text);
+  color: var(--th_text);
   text-decoration: none;
   cursor: pointer;
 
   &:hover {
-    color: var(--th_secondary_text);
+    color: var(--th_accent);
     text-decoration: underline;
   }
 }
 
 button {
-  border: 1px solid var(--th_main_accent);
-  color: var(--th_main_text);
+  border: 1px solid var(--th_border_strong);
+  color: var(--th_text);
   border-radius: 6px;
 }
 
 .v-divider {
   height: 1px;
   width: 100%;
-  background: var(--th_secondary_text);
+  background: var(--th_border);
 }
 
 .default-wrapper {
