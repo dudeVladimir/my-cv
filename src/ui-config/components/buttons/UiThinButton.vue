@@ -1,14 +1,13 @@
 <template>
   <button
-    :disabled="disabled"
+    type="button"
     class="ui-thin-button"
     :class="`ui-thin-button_${variant}`"
+    :disabled="disabled"
   >
-    <div class="ui-thin-button__content">
-      <div class="main-button-content text-m-3">
-        <slot />
-      </div>
-    </div>
+    <span class="ui-thin-button__content text-s-3">
+      <slot />
+    </span>
   </button>
 </template>
 
@@ -27,19 +26,45 @@ withDefaults(defineProps<Props>(), {
 <style lang="scss" scoped>
 .ui-thin-button {
   width: fit-content;
-  transition: all 0.24s;
+  transition: color 0.2s, background-color 0.2s;
+  padding: 2px 8px;
   border: none;
-  background: none;
-  outline: none;
+  border-radius: 4px;
+  background: transparent;
   color: var(--th_text);
-  padding: 4px 6px;
+  outline: none;
   cursor: pointer;
 
-  &:hover:enabled {
-    filter: brightness(110%);
+  &__content {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
   }
-  &:active:enabled {
-    filter: brightness(90%);
+
+  &_default {
+    &:hover:enabled {
+      background: rgba(var(--th_text_rgb), 0.06);
+    }
+    &:active:enabled {
+      background: rgba(var(--th_text_rgb), 0.1);
+    }
+  }
+
+  &_primary {
+    color: var(--th_accent);
+
+    &:hover:enabled {
+      color: var(--th_accent_hover);
+      background: rgba(var(--th_accent_rgb), 0.08);
+    }
+    &:active:enabled {
+      background: rgba(var(--th_accent_rgb), 0.14);
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid rgba(var(--th_accent_rgb), 0.5);
+    outline-offset: 2px;
   }
 
   &:disabled {

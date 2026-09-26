@@ -1,14 +1,13 @@
 <template>
   <button
+    type="button"
     class="ui-button"
     :class="`ui-button_${variant}`"
     :disabled="disabled"
   >
-    <div class="ui-button__content text-s-3">
-      <div class="main-container">
-        <slot />
-      </div>
-    </div>
+    <span class="ui-button__content text-s-3">
+      <slot />
+    </span>
   </button>
 </template>
 
@@ -26,8 +25,11 @@ withDefaults(defineProps<Props>(), {
 
 <style lang="scss" scoped>
 .ui-button {
-  transition: all 0.24s;
-  padding: 7px 11px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s, background-color 0.2s, border-color 0.2s, transform 0.1s;
+  padding: 7px 14px;
   border-radius: 6px;
   border: 1px solid var(--th_border_strong);
   background: var(--th_surface);
@@ -35,12 +37,21 @@ withDefaults(defineProps<Props>(), {
   outline: none;
   cursor: pointer;
 
-  &_default:hover:enabled {
-    border-color: var(--th_text_muted);
-    background: var(--th_surface_muted);
+  &__content {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
   }
-  &_default:active:enabled {
-    box-shadow: 0px 0px 8px 1px rgba(var(--th_text_rgb), 0.15) inset;
+
+  &_default {
+    &:hover:enabled {
+      border-color: var(--th_text_muted);
+      background: var(--th_surface_muted);
+    }
+    &:active:enabled {
+      border-color: var(--th_text_muted);
+      background: rgba(var(--th_text_rgb), 0.14);
+    }
   }
 
   &_primary {
@@ -53,6 +64,18 @@ withDefaults(defineProps<Props>(), {
       border-color: var(--th_accent_hover);
       background: rgba(var(--th_accent_rgb), 0.12);
     }
+    &:active:enabled {
+      background: rgba(var(--th_accent_rgb), 0.18);
+    }
+  }
+
+  &:active:enabled {
+    transform: scale(0.99);
+  }
+
+  &:focus-visible {
+    outline: 2px solid rgba(var(--th_accent_rgb), 0.5);
+    outline-offset: 2px;
   }
 
   &:disabled {
